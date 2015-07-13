@@ -1,0 +1,104 @@
+# History
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=5000
+setopt share_history
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+
+setopt autocd
+setopt interactive_comments
+unsetopt beep
+
+bindkey -e # Emacs mode
+
+zstyle :compinstall filename "$HOME/.zshrc"
+
+# Enable completion
+autoload -Uz compinit && compinit
+# Complete files starting with .
+_comp_options+=(globdots)
+# Select completion options with left/right arrows
+zstyle ':completion:*' menu select
+
+# Local binaries
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Local libraries
+if [ -d "$HOME/.local/lib" ]; then
+    LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH
+fi
+
+# Default editor
+export EDITOR=vim
+
+# General aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias cls='clear'
+
+alias ls='ls --color=auto'
+alias grep='grep --colour=auto'
+
+alias proc="ps -u $(whoami)"
+alias pkill="pkill -u $(whoami)"
+
+# Git integration
+setopt prompt_subst
+source "$HOME/.zsh/git-prompt.sh"
+# Prompts
+PS1=$'%{\e[0;31m%}%n@%m%{\e[0m%}:%{\e[0;36m%}%~%{\e[0m%}# '
+RPROMPT=$'%{\e[0;33m%}$(__git_ps1)%{\e[0m%}'
+
+# Auto ls on cd
+chpwd() {
+    ls
+}
+
+# TMUX
+if which tmux >/dev/null 2>&1; then
+    #if not inside a tmux session, and if no session is started, start a new session
+    test -z "$TMUX" && (tmux attach || tmux new-session)
+fi
+
+refresh_tmux() {
+    if [[ -n $TMUX ]]; then
+        NEW_SSH_AUTH_SOCK=`tmux showenv | grep ^SSH_AUTH_SOCK | cut -d = -f 2`
+        if [[ -n $NEW_SSH_AUTH_SOCK ]] && [[ -S $NEW_SSH_AUTH_SOCK ]]; then
+            SSH_AUTH_SOCK=$NEW_SSH_AUTH_SOCK
+        fi
+    fi
+}
+
+alias tm="tmux attach-session -t 0"
+alias rtm="refresh_tmux"
+
+alias tmux="TERM=screen-256color-bce tmux"
+
+# Keys
+bindkey '\e[3~' delete-char # Del
+bindkey '^b' backward-word # Ctrl+b
+bindkey '^f' forward-word # Ctrl+f
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES=(
+    'alias'           'fg=green,bold'
+    'builtin'         'fg=153'
+    'function'        'fg=166'
+    'command'         'fg=blue'
+    'precommand'      'fg=153, underline'
+    'hashed-commands' 'fg=153'
+    'path'            'underline'
+    'globbing'        'fg=166'
+)
+
+source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+if [[ -f "$HOME/.zshrc.local" ]]; then
+    source "$HOME/.zshrc.local"
+fi
+
