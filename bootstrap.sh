@@ -65,8 +65,34 @@ bootstrap_zsh() {
     info "Bootstrap zsh finished"
 }
 
+bootstrap_tmux() {
+    info "Starting tmux bootstrap"
+    make_backup "$HOME/.tmux.conf"
+    rm -rf "$HOME/.tmux.conf"
+    make_link "$REPO_ROOT/.tmux.link" "$HOME/.tmux.conf"
+    info "Bootstrap tmux finished"
+}
+
+bootstrap_git() {
+    info "Starting git bootstrap"
+    make_backup "$HOME/.gitconfig"
+    rm -rf "$HOME/.gitconfig"
+
+    read -p "Enter your git name: " -e git_name
+    read -p "Enter your git email: " -e git_email
+
+    sed -e "s/USERNAME/$git_name/g" -e "s/USERMAIL/$git_email/g" gitconfig.link.sample > gitconfig.link 
+
+    make_link "$REPO_ROOT/gitconfig.link" "$HOME/.gitconfig"
+    info "Bootstrap git finished"
+}
+
 info "Checking out and updating submodules"
 git submodule update --init
 
 bootstrap_zsh
+bootstrap_tmux
+bootstrap_git
+
 info "Bootstrap script finished"
+
