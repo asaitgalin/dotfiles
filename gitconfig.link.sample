@@ -1,0 +1,11 @@
+[user]
+	name = USERNAME
+	email = USERMAIL
+[branch]
+    autosetuprebase = always
+[branch "master"]
+    rebase = true
+[alias]
+    co = checkout
+    ci = commit
+    st = status
