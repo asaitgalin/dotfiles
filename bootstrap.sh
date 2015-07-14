@@ -84,7 +84,7 @@ bootstrap_git() {
     rm -rf "$HOME/.gitconfig"
 
     input "Enter your git name:" git_name
-    input "Enter your git email: " git_email
+    input "Enter your git email:" git_email
 
     sed -e "s/USERNAME/$git_name/g" -e "s/USERMAIL/$git_email/g" gitconfig.link.sample > gitconfig.link
 
