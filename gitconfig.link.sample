@@ -9,3 +9,4 @@
     co = checkout
     ci = commit
     st = status
+    sm = submodule
