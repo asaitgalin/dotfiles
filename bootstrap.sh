@@ -6,21 +6,26 @@ cd "$(dirname "$0")"
 REPO_ROOT=$(pwd)
 
 error() {
-    printf "\e[0;31mERROR:\e[0m %s\n" "$1"
+    printf "\e[0;31m[ERROR]\e[0m %s\n" "$1"
     exit 1
 }
 
 info() {
-    printf "\e[0;32mINFO:\e[0m %s\n" "$1"
+    printf "\e[0;32m[INFO]\e[0m %s\n" "$1"
 }
 
 warning() {
-    printf "\e[0;33mWARNING:\e[0m %s\n" "$1"
+    printf "\e[0;33m[WARNING]\e[0m %s\n" "$1"
+}
+
+input() {
+    printf "\e[0;34m[INPUT]\e[0m "
+    read -p "$1 " -e $2
 }
 
 info "Bootstrap script started (user: $(whoami)) "
 
-MAKE_BACKUP=1 
+MAKE_BACKUP=1
 
 while [[ $# > 0 ]]; do
     key=$1
@@ -78,10 +83,10 @@ bootstrap_git() {
     make_backup "$HOME/.gitconfig"
     rm -rf "$HOME/.gitconfig"
 
-    read -p "Enter your git name: " -e git_name
-    read -p "Enter your git email: " -e git_email
+    input "Enter your git name:" git_name
+    input "Enter your git email: " git_email
 
-    sed -e "s/USERNAME/$git_name/g" -e "s/USERMAIL/$git_email/g" gitconfig.link.sample > gitconfig.link 
+    sed -e "s/USERNAME/$git_name/g" -e "s/USERMAIL/$git_email/g" gitconfig.link.sample > gitconfig.link
 
     make_link "$REPO_ROOT/gitconfig.link" "$HOME/.gitconfig"
     info "Bootstrap git finished"
