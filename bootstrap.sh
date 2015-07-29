@@ -74,7 +74,7 @@ bootstrap_tmux() {
     info "Starting tmux bootstrap"
     make_backup "$HOME/.tmux.conf"
     rm -rf "$HOME/.tmux.conf"
-    make_link "$REPO_ROOT/.tmux.link" "$HOME/.tmux.conf"
+    make_link "$REPO_ROOT/tmux.link" "$HOME/.tmux.conf"
     info "Bootstrap tmux finished"
 }
 
