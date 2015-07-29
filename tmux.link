@@ -7,6 +7,9 @@ bind C-a send-prefix
 unbind r
 bind r source-file ~/.tmux.conf
 
+# Default shell
+set-option -g default-shell /bin/zsh
+
 # current window highlight
 set-option -g pane-active-border-fg blue
 
