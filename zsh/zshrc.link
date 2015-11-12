@@ -46,7 +46,7 @@ alias cls='clear'
 
 alias ls='ls --color=auto'
 alias grep='grep --color=always'
-alias less='less -R'
+alias less='less -R -N'
 
 alias proc="ps -u $(whoami)"
 alias pkill="pkill -u $(whoami)"
