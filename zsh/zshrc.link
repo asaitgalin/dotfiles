@@ -16,6 +16,8 @@ zstyle :compinstall filename "$HOME/.zshrc"
 
 # Enable completion
 autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
+
 # Complete files starting with .
 _comp_options+=(globdots)
 # Select completion options with left/right arrows
