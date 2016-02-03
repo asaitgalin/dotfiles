@@ -30,8 +30,13 @@ fi
 
 # Local libraries
 if [ -d "$HOME/.local/lib" ]; then
-    LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
-    export LD_LIBRARY_PATH
+    if [ "$(uname)" != "Darwin" ]; then
+        LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
+        export LD_LIBRARY_PATH
+    else
+        DYLD_LIBRARY_PATH="$HOME/.local/lib:$DYLD_LIBRARY_PATH"
+        export DYLD_LIBRARY_PATH
+    fi
 fi
 
 # Language
@@ -46,7 +51,10 @@ alias la='ls -A'
 alias l='ls -CF'
 alias cls='clear'
 
-alias ls='ls --color=auto'
+if [ "$(uname)" != "Darwin" ]; then
+    alias ls='ls --color=auto'
+fi
+
 alias grep='grep --color=always'
 alias less='less -R -N'
 
