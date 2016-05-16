@@ -10,3 +10,4 @@
     ci = commit
     st = status -sb
     sm = submodule
+    hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
