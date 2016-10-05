@@ -70,6 +70,13 @@ bootstrap_zsh() {
     info "Bootstrap zsh finished"
 }
 
+bootstrap_ls_colors() {
+    info "Starting ls colors bootstrap"
+    make_backup "$HOME/.dir_colors"
+    rm -rf "$HOME/.dir_colors"
+    make_link "$REPO_ROOT/dir_colors.link" "$HOME/.dir_colors"
+}
+
 bootstrap_tmux() {
     info "Starting tmux bootstrap"
     make_backup "$HOME/.tmux.conf"
@@ -96,6 +103,7 @@ info "Checking out and updating submodules"
 git submodule update --init
 
 bootstrap_zsh
+bootstrap_ls_colors
 bootstrap_tmux
 bootstrap_git
 

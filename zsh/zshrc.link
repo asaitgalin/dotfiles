@@ -25,7 +25,13 @@ zstyle ':completion:*' menu select
 
 # Local binaries
 if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Using GNU coreutils instead of default Mac OS X tools
+if [ "$(uname)" = "Darwin" ]; then
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
 
 # Local libraries
@@ -48,12 +54,13 @@ export EDITOR=vim
 # General aliases
 alias ll='ls -alF'
 alias la='ls -A'
+# Requires GNU coreutils installed on Mac OS X
+alias ls='ls --color=auto'
 alias l='ls -CF'
 alias cls='clear'
 
-if [ "$(uname)" != "Darwin" ]; then
-    alias ls='ls --color=auto'
-fi
+# ls colors for Solarized theme
+eval $(dircolors ~/.dir_colors)
 
 alias grep='grep --color=always'
 alias less='less -R -N'
