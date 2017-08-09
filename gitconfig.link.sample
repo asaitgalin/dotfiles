@@ -1,6 +1,6 @@
 [user]
-	name = USERNAME
-	email = USERMAIL
+    name = USERNAME
+    email = USERMAIL
 [branch]
     autosetuprebase = always
 [branch "master"]

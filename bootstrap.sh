@@ -57,7 +57,7 @@ make_link() {
 }
 
 bootstrap_zsh() {
-    info "Starting zsh bootstrap"
+    info "Bootstrapping zsh"
     make_backup "$HOME/.zshrc"
     rm -rf "$HOME/.zshrc"
     make_backup "$HOME/.zsh"
@@ -66,27 +66,24 @@ bootstrap_zsh() {
     for file in $(find "$REPO_ROOT/zsh" -maxdepth 1 -name "*.link"); do
         make_link "$file" "$HOME/.$(basename "${file%.*}")"
     done
-
-    info "Bootstrap zsh finished"
 }
 
 bootstrap_ls_colors() {
-    info "Starting ls colors bootstrap"
+    info "Bootstrapping ls colors"
     make_backup "$HOME/.dir_colors"
     rm -rf "$HOME/.dir_colors"
     make_link "$REPO_ROOT/dir_colors.link" "$HOME/.dir_colors"
 }
 
 bootstrap_tmux() {
-    info "Starting tmux bootstrap"
+    info "Bootstrapping tmux"
     make_backup "$HOME/.tmux.conf"
     rm -rf "$HOME/.tmux.conf"
     make_link "$REPO_ROOT/tmux.link" "$HOME/.tmux.conf"
-    info "Bootstrap tmux finished"
 }
 
 bootstrap_git() {
-    info "Starting git bootstrap"
+    info "Bootstrapping git"
     make_backup "$HOME/.gitconfig"
     rm -rf "$HOME/.gitconfig"
 
@@ -96,16 +93,30 @@ bootstrap_git() {
     sed -e "s/USERNAME/$git_name/g" -e "s/USERMAIL/$git_email/g" gitconfig.link.sample > gitconfig.link
 
     make_link "$REPO_ROOT/gitconfig.link" "$HOME/.gitconfig"
-    info "Bootstrap git finished"
+}
+
+bootstrap_vim() {
+   info "Bootstrapping vim"
+   make_backup "$HOME/.vimrc"
+   rm -rf "$HOME/.vimrc"
+   make_backup "$HOME/.vim"
+   rm -rf "$HOME/.vim"
+
+   mkdir -p "$HOME/.vim/bundle"
+
+   make_link "$REPO_ROOT/vim/vimrc.link" "$HOME/.vimrc"
+   make_link "$REPO_ROOT/vim/vim.link/bundle/Vundle.vim" "$HOME/.vim/bundle/Vundle.vim"
+
+   info "NOTE: Do not forget to run :PluginInstall in Vim to install all plugins with Vundle."
+   info "NOTE: After plugins installation call \"$HOME/.vim/bundle/YouCompleteMe/install.py --clang-completer\""
+   info "  to build all necessary stuff for YouCompleteMe."
 }
 
 info "Checking out and updating submodules"
-git submodule update --init
+git submodule update --init --recursive
 
 bootstrap_zsh
 bootstrap_ls_colors
 bootstrap_tmux
 bootstrap_git
-
-info "Bootstrap script finished"
-
+bootstrap_vim
