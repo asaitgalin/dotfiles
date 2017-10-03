@@ -127,3 +127,5 @@ alias tmux="TERM=screen-256color-bce tmux"
 
 export PDSH_RCMD_TYPE=ssh
 export PDSH_SSH_ARGS_APPEND="-o StrictHostKeyChecking=no"
+
+export FZF_TMUX=1
