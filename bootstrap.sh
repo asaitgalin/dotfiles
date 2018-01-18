@@ -86,6 +86,8 @@ bootstrap_git() {
     info "Bootstrapping git"
     make_backup "$HOME/.gitconfig"
     rm -rf "$HOME/.gitconfig"
+    make_backup "$HOME/.githooks"
+    rm -rf "$HOME/.githooks"
 
     input "Enter your git name:" git_name
     input "Enter your git email:" git_email
