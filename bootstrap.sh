@@ -90,9 +90,13 @@ bootstrap_git() {
     input "Enter your git name:" git_name
     input "Enter your git email:" git_email
 
-    sed -e "s/USERNAME/$git_name/g" -e "s/USERMAIL/$git_email/g" gitconfig.link.sample > gitconfig.link
+    sed -e "s/USERNAME/$git_name/g" \
+        -e "s/USERMAIL/$git_email/g" \
+        $REPO_ROOT/git/gitconfig.link.sample > $REPO_ROOT/git/gitconfig.link
 
-    make_link "$REPO_ROOT/gitconfig.link" "$HOME/.gitconfig"
+    for file in $(find "$REPO_ROOT/git" -maxdepth 1 -name "*.link"); do
+        make_link "$file" "$HOME/.$(basename "${file%.*}")"
+    done
 }
 
 bootstrap_vim() {

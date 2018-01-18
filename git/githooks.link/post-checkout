@@ -1,0 +1,11 @@
+#!/bin/bash
+
+FLAG=$3
+
+# Rebuild tags only after branch checkout, not file checkout
+if [[ "$FLAG" == "1" ]]; then
+    if which ctags >/dev/null; then
+        echo "Rebuilding tags after branch checkout..."
+        ctags -f .tags -R . --fields=+li --extra=+q
+    fi
+fi

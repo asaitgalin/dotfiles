@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if which ctags >/dev/null; then
+    echo "Rebuilding tags after merge..."
+    ctags -f .tags -R . --fields=+li --extra=+q
+fi
