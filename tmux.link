@@ -16,6 +16,8 @@ set-option -g pane-active-border-fg blue
 # vi mode
 set-window-option -g mode-keys vi
 
+set-environment -g "SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+
 # rebind split keys to save current pane path
 bind c new-window -c "#{pane_current_path}"
 bind % split-window -h -c "#{pane_current_path}"

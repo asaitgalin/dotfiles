@@ -101,6 +101,18 @@ bootstrap_git() {
     done
 }
 
+bootstrap_sshrc() {
+   info "Bootstrapping sshrc"
+   make_backup "$HOME/.ssh/rc"
+   rm -rf "$HOME/.ssh/rc"
+
+   if [[ ! -d "$HOME/.ssh" ]]; then
+       mkdir -p "$HOME/.ssh" --mode 700
+   fi
+
+   make_link "$REPO_ROOT/sshrc.link" "$HOME/.ssh/rc"
+}
+
 bootstrap_vim() {
    info "Bootstrapping vim"
    make_backup "$HOME/.vimrc"
@@ -125,4 +137,5 @@ bootstrap_zsh
 bootstrap_ls_colors
 bootstrap_tmux
 bootstrap_git
+bootstrap_sshrc
 bootstrap_vim
