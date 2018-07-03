@@ -2,5 +2,5 @@
 
 if which ctags >/dev/null; then
     echo "Rebuilding tags after merge..."
-    ctags -f .tags -R . --fields=+li --extra=+q
+    git ls-files | ctags -f .tags --fields=+li --extra=+q -L -
 fi

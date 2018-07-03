@@ -6,6 +6,6 @@ FLAG=$3
 if [[ "$FLAG" == "1" ]]; then
     if which ctags >/dev/null; then
         echo "Rebuilding tags after branch checkout..."
-        ctags -f .tags -R . --fields=+li --extra=+q
+        git ls-files | ctags -f .tags --fields=+li --extra=+q -L -
     fi
 fi
