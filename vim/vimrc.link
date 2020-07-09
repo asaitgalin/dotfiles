@@ -21,7 +21,6 @@ Plugin 'rking/ag.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'tpope/vim-fugitive'
-Plugin 'fatih/vim-go'
 Plugin 'mhinz/vim-signify'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
@@ -129,3 +128,7 @@ map <Leader>d :append<CR>///////////////////////////////////////////////////////
 
 " Delete trailing whitespaces
 nnoremap <leader>dtr :%s/\s\+$//e<CR>
+
+" Thrift
+au BufRead,BufNewFile *.thrift set filetype=thrift
+au! Syntax thrift source ~/.vim/thrift.vim
