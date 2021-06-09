@@ -11,7 +11,7 @@ bind r source-file ~/.tmux.conf
 set-option -g default-shell /bin/zsh
 
 # current window highlight
-set-option -g pane-active-border-fg blue
+set-option -g pane-active-border-style fg=blue
 
 # vi mode
 set-window-option -g mode-keys vi
